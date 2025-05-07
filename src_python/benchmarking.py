@@ -52,4 +52,41 @@ class Benchmarking:
         tarea(array)
         fin = time.perf_counter()
         return fin - inicio
-    
+
+    def _init_(self):
+        print('Bench inicializado')
+
+    def build_arreglo(size):
+        return [random.randint(0, 99999) for _ in range(size)]
+
+    def contar_con_current_time_millis(tarea, array):
+        inicio = time.time()  
+        tarea(array)
+        fin = time.time()
+        return (fin - inicio) * 1000 
+
+    def contar_con_nano_time(tarea, array):
+        inicio = time.perf_counter_ns()
+        tarea(array)
+        fin = time.perf_counter_ns()
+        return fin - inicio  
+
+
+    def medir_tiempo(tarea, array):
+        inicio = time.perf_counter()
+        tarea(array)
+        fin = time.perf_counter()
+        return fin - inicio  
+
+    def ejemplo(self):
+        mOrdenamiento = MetodosOrdenamiento()
+        arreglo = self.build_arreglo(50000)
+
+        arreglo_bubble = arreglo[:]
+        arreglo_seleccion = arreglo[:]
+
+        tiempoMillis = self.contar_con_current_time_millis(mOrdenamiento.sortByBubble, arreglo_bubble)
+        tiempoNano = self.contar_con_nano_time(mOrdenamiento.sort_seleccion, arreglo_seleccion)
+
+        print(f'Tiempo en milisegundos (Burbuja): {tiempoMillis:.3f} ms')
+        print(f'Tiempo en nanosegundos (Selección): {tiempoNano} ns')
